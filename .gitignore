@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+**/node_modules/
+jspm_packages/
+
+# Next.js build output
+.next/
+out/
+
+# TypeScript build output
+dist/
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
