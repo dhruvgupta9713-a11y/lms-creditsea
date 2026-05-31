@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function Register() {
   const router = useRouter();
@@ -19,9 +20,9 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
+      await axios.post(`${API_URL}/api/auth/register`, { name, email, password });
       // auto-login or redirect
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       router.push("/borrower/dashboard");

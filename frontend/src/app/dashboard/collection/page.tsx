@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function CollectionModule() {
   const [loans, setLoans] = useState([]);
@@ -11,7 +12,7 @@ export default function CollectionModule() {
   const fetchLoans = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/dashboard/collection/loans", {
+      const res = await axios.get(`${API_URL}/api/dashboard/collection/loans`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLoans(res.data.loans);
@@ -30,7 +31,7 @@ export default function CollectionModule() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`http://localhost:5000/api/dashboard/collection/payments`, 
+      await axios.post(`${API_URL}/api/dashboard/collection/payments`, 
       { loanId: selectedLoanId, utr, amount: Number(amount) }, 
       {
         headers: { Authorization: `Bearer ${token}` }

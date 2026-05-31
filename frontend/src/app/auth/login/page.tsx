@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function Login() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       

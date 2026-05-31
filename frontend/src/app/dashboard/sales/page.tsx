@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function SalesModule() {
   const [leads, setLeads] = useState([]);
@@ -9,7 +10,7 @@ export default function SalesModule() {
     const fetchLeads = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/dashboard/sales/leads", {
+        const res = await axios.get(`${API_URL}/api/dashboard/sales/leads`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setLeads(res.data.leads);

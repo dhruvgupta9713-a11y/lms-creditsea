@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function ApplyFlow() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function ApplyFlow() {
   const [salarySlip, setSalarySlip] = useState<File | null>(null);
 
   // Step 3: Config State
-  const [amount, setAmount] = useState(50000);
+  const [amount, setAmount] = useState(5000);
   const [tenure, setTenure] = useState(30);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function ApplyFlow() {
     setError("");
     try {
       await axios.post(
-        "http://localhost:5000/api/borrower/profile",
+        `${API_URL}/api/borrower/profile`,
         { pan, dob, monthlySalary: Number(monthlySalary), employmentMode },
         { headers }
       );
@@ -63,7 +64,7 @@ export default function ApplyFlow() {
     try {
       const formData = new FormData();
       formData.append("salarySlip", salarySlip);
-      await axios.post("http://localhost:5000/api/borrower/upload-slip", formData, {
+      await axios.post(`${API_URL}/api/borrower/upload-slip`, formData, {
         headers: { ...headers, "Content-Type": "multipart/form-data" },
       });
       setStep(3);
@@ -80,7 +81,7 @@ export default function ApplyFlow() {
     setError("");
     try {
       await axios.post(
-        "http://localhost:5000/api/borrower/loan",
+        `${API_URL}/api/borrower/loan`,
         { amount: Number(amount), tenure: Number(tenure) },
         { headers }
       );

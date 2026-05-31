@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function SanctionModule() {
   const [loans, setLoans] = useState([]);
@@ -8,7 +9,7 @@ export default function SanctionModule() {
   const fetchLoans = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/dashboard/sanction/loans", {
+      const res = await axios.get(`${API_URL}/api/dashboard/sanction/loans`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLoans(res.data.loans);
@@ -29,7 +30,7 @@ export default function SanctionModule() {
     
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/dashboard/sanction/loans/${id}`, { status, rejectionReason: reason }, {
+      await axios.patch(`${API_URL}/api/dashboard/sanction/loans/${id}`, { status, rejectionReason: reason }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchLoans();
@@ -60,7 +61,7 @@ export default function SanctionModule() {
                 <td className="px-6 py-4 whitespace-nowrap text-gray-500">{loan.tenure} days</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {loan.borrowerId?.salarySlipUrl && (
-                    <a href={`http://localhost:5000${loan.borrowerId.salarySlipUrl}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View Slip</a>
+                    <a href={`${API_URL}${loan.borrowerId.salarySlipUrl}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">View Slip</a>
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap space-x-2">

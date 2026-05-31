@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function DisbursementModule() {
   const [loans, setLoans] = useState([]);
@@ -8,7 +9,7 @@ export default function DisbursementModule() {
   const fetchLoans = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/dashboard/disbursement/loans", {
+      const res = await axios.get(`${API_URL}/api/dashboard/disbursement/loans`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLoans(res.data.loans);
@@ -26,7 +27,7 @@ export default function DisbursementModule() {
     
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/dashboard/disbursement/loans/${id}`, {}, {
+      await axios.patch(`${API_URL}/api/dashboard/disbursement/loans/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchLoans();

@@ -7,6 +7,7 @@ import axios from "axios";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { FileText, Calendar, PlusCircle, CheckCircle, Clock, AlertTriangle, LogOut } from "lucide-react";
+import { API_URL } from "@/lib/api";
 
 interface Loan {
   _id: string;
@@ -31,7 +32,7 @@ export default function BorrowerDashboard() {
         router.push("/auth/login");
         return;
       }
-      const res = await axios.get("http://localhost:5000/api/borrower/loans", {
+      const res = await axios.get(`${API_URL}/api/borrower/loans`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLoans(res.data.loans);
