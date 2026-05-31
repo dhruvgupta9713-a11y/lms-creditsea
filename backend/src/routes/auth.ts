@@ -45,4 +45,35 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
+// GET or POST /seed to populate default role accounts
+router.all('/seed', async (req: Request, res: Response) => {
+  try {
+    const roles = Object.values(Role);
+    const seeded: string[] = [];
+
+    for (const role of roles) {
+      const email = `${role.toLowerCase()}@lms.com`;
+      const existingUser = await User.findOne({ email });
+
+      if (!existingUser) {
+        const passwordHash = await bcrypt.hash('password123', 10);
+        await User.create({
+          name: `${role} User`,
+          email,
+          passwordHash,
+          role,
+        });
+        seeded.push(`${role} (${email})`);
+      }
+    }
+
+    res.json({
+      message: 'Database seeded successfully',
+      seeded: seeded.length > 0 ? seeded : 'All default role accounts already exist'
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Seeding failed', error });
+  }
+});
+
 export default router;
